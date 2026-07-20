@@ -10,5 +10,5 @@ score = st.slider("점수", 0, 100, 50)
 feel = st.text_area("소감", placeholder="소감합니다.")
 
 if st.button("확인"):
-        st.success(f"{user_id} / {grade} / {ban}반 / {hard}")
+        st.success(f"{user_id} / {grade}학년 / {ban}반 / {hard}")
         st.info(f"소감: {feel}")
