@@ -25,6 +25,8 @@ with col2:
           st.session_state.result = st.session_state.end_time - st.session_state.start_time
         else:
             st.warning("시작 버튼을 먼저 눌러주세요!")
+  else:
+    st.warning("이미 게임이 끝났습니다. 다시하기를 눌러주세요.")
 
 if st.session_state.end_time != 0:
     diff = st.session_state.result
