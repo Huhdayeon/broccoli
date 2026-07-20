@@ -18,7 +18,7 @@ with col1:
       st.session_state.start_time = time.time() # 현재 시각 기록
       st.session_state.end_time = 0          # 종료 시간 초기화
 with col2:
-  if st.session_state.end_time = 0:
+  if st.session_state.end_time == 0:
     if st.button("종료"):
         if st.session_state.start_time != 0:
           st.session_state.end_time = time.time()
