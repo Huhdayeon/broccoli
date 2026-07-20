@@ -35,7 +35,7 @@ with tab2:
     st.info("너무 많은 액세서리는 투머치가 될 수 있어요!")
 
 st.markdown("---")
-if st.botton("코디 완성하기"):
+if st.button("코디 완성하기"):
   with st.container(border=True):
     st.subheader("{user_name}님의 오늘의 룩북")
     st.write(f"오늘같은 **{weather}** 날씨에는 이렇게 입어 보세요!")
