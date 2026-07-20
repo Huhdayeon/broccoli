@@ -18,8 +18,8 @@ with col1:
   top_color = st.select_slider("색상 톤", options=["밝음", "무난함", "어두움"])
 with col2:
   st.subheader("하의")
-  top_type = st.radio("종류", ["청바지", "슬랙스", "트레이닝 팬츠", "반바"])
-  top_color = st.select_slider("핏(fit)", options=["슬림", "레귤러", "오버핏"])
+  bottom_type = st.radio("종류", ["청바지", "슬랙스", "트레이닝 팬츠", "반바지"])
+  bottom_color = st.select_slider("핏(fit)", options=["슬림", "레귤러", "오버핏"])
 
 st.header("디테일 추가")
 tab1, tab2 = st.tabs(["신발", "액세서리"])
@@ -33,3 +33,18 @@ with tab2:
   shoes = st.selectbox("액세서리 추가", ["모자", "안경", "목걸이", "가방"])
   with st.expander("액세서리 스타일링 팁 보기 "):
     st.info("너무 많은 액세서리는 투머치가 될 수 있어요!")
+
+st.markdown("---")
+if st.botton("코디 완성하기"):
+  with st.container(border=True):
+    st.subheader("{user_name}님의 오늘의 룩북")
+    st.write(f"오늘같은 **{weather}** 날씨에는 이렇게 입어 보세요!")
+    st.markdown(f"""
+    * **상의:** {top_color} {top_type}
+    * **하의:** {bottom_color} {bottom_type}
+    * **매칭:** {shoes}와 {','.join(acc) if acc else '악세서리 없이 깔끔하게!'}
+    """)
+    st.success("오늘의 스타일링이 완성되었습니다. 자신있게 외출하세요!")
+  with st.expander("코디 연출 팁 영상 보기"):
+    st.video("https://www.youtube.com/watch?v=EAqbrVkvT4w")
+    st.write("전문가가 제안하는 코디 연출법을 참고해보세요!") 
