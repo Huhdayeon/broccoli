@@ -47,6 +47,7 @@ def page_mentoring():
     * **연령대:** {age}
     * **진로 희망:** {career_goal}
     * **관심 분야:** {field}
+    """)
     st.subheader("탐구 고민 작성")
     if "messages" not in st.session_state:
         st.session_state.messages = [
