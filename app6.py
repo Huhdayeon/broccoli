@@ -52,32 +52,32 @@ def page_mentoring():
     * **진로 희망:** {current_career}
     """)
     st.subheader("탐구 고민 작성")
-    if "questions" not in st.session_state:
-        st.session_state.questions = [
+    if "messages" not in st.session_state:
+        st.session_state.mentoring_messages = [
             {"role": "system", "content": """당신은 고등학교 및 대학교 과학 탐구활동 전문 입시/학술 컨설턴트 입니다. 사용자의 학년 수준에서 스스로 수행할 수 있는 구체적인 탐구 주제 3가지를 추천하고, 진로와 직접적으로 연계되는 생활기록부 세특 강조 포인트를 짚어준 다음,
              학교 실험실이나 집(컴퓨터)에서 직접 해볼 수 있는 실험/데이터 분석 방법을 조언해 주세요."""}
              ]
         
-    for message in st.session_state.questions:
+    for message in st.session_mentoring_messages:
         if message["role"] != "system":
             with st.chat_message(message["role"]):
                 st.markdown(message["content"])
                 
     question = st.chat_input("진로와 과학 탐구와 관련해서 궁금한 점을 입력하세요.")
     if question:
-        st.session_state.questions.append({"role": "user", "content": question})
+        st.session_state.mentoring_messages.append({"role": "user", "content": question})
         with st.chat_message("user"):
             st.markdown(question)
         with st.chat_message("assistant"):
             status_context = f"사용자의 연령대: {current_age}, 사용자의 진로: {current_career}"
-            prompt = st.session_state.questions + [{"role": "system", "content": status_context}]
+            prompt = st.session_state.mentoring_messages + [{"role": "system", "content": status_context}]
             with st.spinner("AI 코치가 생각 중...🤔"):
                 response = ai_client.chat.completions.create(
                     model="gpt-5.4-mini",
-                    questions=prompt)
+                    messages=prompt)
                 ai_response = response.choices[0].message.content
                 st.markdown(ai_response)
-        st.session_state.questions.append({"role": "assistant", "content": ai_response})
+        st.session_state.mentoring_messages.append({"role": "assistant", "content": ai_response})
 
 pg = st.navigation([
     st.Page(page_research, title="자료 탐색"),
