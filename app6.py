@@ -1,12 +1,14 @@
 import streamlit as st
 
+from openai import OpenAI
+ai_client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
+
 st.title("🧪AI 과학 탐구 메이트")
 
 with st.sidebar:
   st.header("프로필")
-  age = st.select_slider("연령대", ["중학생", "고1", "고2", "고3", "성인"], value = "고2")
-  career_goal = st.text_input("진로 희망")
-  field = st.radio("관심 분야", ["물리", "화학", "생명과", "지구과학"])
+  st.select_slider("연령대", ["중학생", "고1", "고2", "고3", "성인"], value = "고2", key="age")
+  st.text_input("진로 희망", key="career_goal")
 
 def page_research():
   st.title("최신 연구&학술 동향")
@@ -41,42 +43,43 @@ def page_mentoring():
   st.title("나이&진로 맞춤형 탐구 설계 조언")
   st.info("사이드바에 입력하신 프로필을 바탕으로, 학년 수준에 맞는 탐구 로드맵을 제공합니다.")
   st.markdown("---")
+  current_age = st.session_state["age"]
+  current_career = st.session_state["career_goal"]
   with st.container(border=True):
     st.subheader("프로필")
     st.markdown(f"""
-    * **연령대:** {age}
-    * **진로 희망:** {career_goal}
-    * **관심 분야:** {field}
+    * **연령대:** {current_age}
+    * **진로 희망:** {current_career}
     """)
     st.subheader("탐구 고민 작성")
-    if "messages" not in st.session_state:
-        st.session_state.messages = [
-            {"role": "system", "content": "당신은 고등학교 및 대학교 과학 탐구활동 전문 입시/학술 컨설턴트 입니다. 사용자의 학년 수준에서 스스로 수행할 수 있는 구체적인 탐구 주제 3가지를 추천하고, 진로와 직접적으로 연계되는 생활기록부 세특 강조 포인트를 짚어준 다음,
-             학교 실험실이나 집(컴퓨터)에서 직접 해볼 수 있는 실험/데이터 분석 방법을 조언해 주세요."}
+    if "questions" not in st.session_state:
+        st.session_state.questions = [
+            {"role": "system", "content": """당신은 고등학교 및 대학교 과학 탐구활동 전문 입시/학술 컨설턴트 입니다. 사용자의 학년 수준에서 스스로 수행할 수 있는 구체적인 탐구 주제 3가지를 추천하고, 진로와 직접적으로 연계되는 생활기록부 세특 강조 포인트를 짚어준 다음,
+             학교 실험실이나 집(컴퓨터)에서 직접 해볼 수 있는 실험/데이터 분석 방법을 조언해 주세요."""}
              ]
         
-    for message in st.session_state.messages:
+    for message in st.session_state.questions:
         if message["role"] != "system":
             with st.chat_message(message["role"]):
                 st.markdown(message["content"])
                 
     question = st.chat_input("진로와 과학 탐구와 관련해서 궁금한 점을 입력하세요.")
     if question:
-        st.session_state.messages.append({"role": "user", "content": question})
+        st.session_state.questions.append({"role": "user", "content": question})
         with st.chat_message("user"):
             st.markdown(question)
         with st.chat_message("assistant"):
-            status_context = f"사용자의 연령대: {age}, 사용자의 진로: {career_goal}"
-            prompt = st.session_state.messages + [{"role": "system", "content": status_context}]
+            status_context = f"사용자의 연령대: {current_age}, 사용자의 진로: {current_career}"
+            prompt = st.session_state.questions + [{"role": "system", "content": status_context}]
             with st.spinner("AI 코치가 생각 중...🤔"):
                 response = ai_client.chat.completions.create(
                     model="gpt-5.4-mini",
-                    messages=prompt)
+                    questions=prompt)
                 ai_response = response.choices[0].message.content
                 st.markdown(ai_response)
-        st.session_state.messages.append({"role": "assistant", "content": ai_response})
+        st.session_state.questions.append({"role": "assistant", "content": ai_response})
 
-    pg = st.navigation([
-      st.Page(page_research, title="자료 탐색"),
-      st.Page(page_mentoring, title="조언 구하기")], position="top")
-    pg.run()
+pg = st.navigation([
+    st.Page(page_research, title="자료 탐색"),
+    st.Page(page_mentoring, title="조언 구하기")], position="top")
+pg.run()
