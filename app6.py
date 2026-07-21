@@ -58,7 +58,7 @@ def page_mentoring():
              학교 실험실이나 집(컴퓨터)에서 직접 해볼 수 있는 실험/데이터 분석 방법을 조언해 주세요."""}
              ]
         
-    for message in st.session.state.mentoring_messages:
+    for message in st.session_state.mentoring_messages:
         if message["role"] != "system":
             with st.chat_message(message["role"]):
                 st.markdown(message["content"])
