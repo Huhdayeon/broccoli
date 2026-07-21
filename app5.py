@@ -1,7 +1,8 @@
 import streamlit as st
 
 from openai import OpenAI
-ai_client = OpenAI(api_key=st.secrets["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"])
+ai_client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
+OPENAI_API_KEY = "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"
 if 'todo_list' not in st.session_state:
     st.session_state.todo_list = []
 if 'user_motto' not in st.session_state:
@@ -77,7 +78,8 @@ def page_report():
 pg = st.navigation([
     st.Page(page_motto, title="오늘의 다짐"),
     st.Page(page_todo, title="오늘의 할 일"),
-    st.Page(page_report, title="나의 갓생 지수")],position="top")
+    st.Page(page_report, title="나의 갓생 지수")
+    st.Pagepage_ai_coach, title="AI 코치와 대화하기")],position="top")
 pg.run()
 
 def page_ai_coach():
