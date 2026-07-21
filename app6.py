@@ -17,25 +17,25 @@ def page_research():
             {"role": "system", "content": "당신은 과학 전문 연구원입니다. 사용자가 검색하는 연구 동향에 대해 최근 가장 주목받는 연구 트렌드 ToP3, 핵심 학술 논문 및 주요 기술 키워드, 이 연구가 사회 및 산업에 미치는 영향을 요약 정리해서 알려주세요."}
         ]
         
-    for message in st.session_state.messages:
-        if message["role"] != "system":
-            with st.chat_message(message["role"]):
+  for message in st.session_state.messages:
+      if message["role"] != "system":
+          with st.chat_message(message["role"]):
                 st.markdown(message["content"])
                 
-    question = st.chat_input("검색하기")
-    if question:
-        st.session_state.messages.append({"role": "user", "content": question})
-        with st.chat_message("user"):
-            st.markdown(question)
-        with st.chat_message("assistant"):
-            prompt = st.session_state.messages
-            with st.spinner("최신 연구 트렌드와 연구 동향 요약 중...🌐"):
-                response = ai_client.chat.completions.create(
-                    model="gpt-5.4-mini",
-                    messages=prompt)
-                ai_response = response.choices[0].message.content
-                st.markdown(ai_response)
-        st.session_state.messages.append({"role": "assistant", "content": ai_response})
+  question = st.chat_input("검색하기")
+  if question:
+      st.session_state.messages.append({"role": "user", "content": question})
+      with st.chat_message("user"):
+          st.markdown(question)
+      with st.chat_message("assistant"):
+          prompt = st.session_state.messages
+          with st.spinner("최신 연구 트렌드와 연구 동향 요약 중...🌐"):
+              response = ai_client.chat.completions.create(
+                  model="gpt-5.4-mini",
+                  messages=prompt)
+              ai_response = response.choices[0].message.content
+              st.markdown(ai_response)
+      st.session_state.messages.append({"role": "assistant", "content": ai_response})
 
 def page_mentoring():
   st.title("나이&진로 맞춤형 탐구 설계 조언"
