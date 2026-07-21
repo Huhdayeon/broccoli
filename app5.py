@@ -56,7 +56,7 @@ for i in range(len(st.session_state.todo_list)):
     with col_status:
         if st.session_state.todo_list[i][1]:
             st.write("✅ **달성!**")
-    st.markdown("---")
+st.markdown("---")
 
 def page_report():
     st.header("📈 3. 나의 갓생 지수")
@@ -71,12 +71,12 @@ def page_report():
         progress = (count / total) * 100
         st.metric("오늘의 달성률", f"{progress:.1f}%")
         st.progress(progress / 100)
-    if progress == 100:
-            st.balloons()
-            st.success("모든 목표를 달성하셨습니다! 🏆")
-    if st.button("기록 전체 초기화"):
-        st.session_state.todo_list = []
-        st.rerun()
+        if progress == 100:
+                st.balloons()
+                st.success("모든 목표를 달성하셨습니다! 🏆")
+        if st.button("기록 전체 초기화"):
+            st.session_state.todo_list = []
+            st.rerun()
 
 def page_ai_coach():
     st.header("AI 코치와 대화하기")
