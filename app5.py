@@ -61,7 +61,7 @@ def page_report():
         st.rerun()
 
 pg = st.navigation([
-    st.page(page_moto, title="오늘의 다짐"),
-    st.page(page_todo, title="오늘의 할 일"),
-    st.page(page_report, title="나의 갓생 지수")])
+    st.page(page1, title="오늘의 다짐"),
+    st.page(page2, title="오늘의 할 일"),
+    st.page(page3, title="나의 갓생 지수")])
 pg.run()
