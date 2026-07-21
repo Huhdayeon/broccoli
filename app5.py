@@ -1,7 +1,8 @@
 import streamlit as st
 
 from openai import OpenAI
-ai_client = OpenAI(api_key=st.secrets["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"])
+ai_client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
+OPENAI_API_KEY = "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"
 if 'todo_list' not in st.session_state:
     st.session_state.todo_list = []
 if 'user_motto' not in st.session_state:
