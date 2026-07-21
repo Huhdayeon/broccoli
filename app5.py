@@ -20,6 +20,8 @@ def edit_motto():
         st.session_state.motto_updated = True
         st.rerun()
         
+st.title("🌱 갓생 살기 플래너")
+
 def page_motto():
     st.header("📣 1. 오늘의 다짐")
     motto = st.text_input("나의 한 줄 좌우명을 적어주세요")
@@ -70,4 +72,3 @@ pg = st.navigation([
     st.Page(page_todo, title="오늘의 할 일"),
     st.Page(page_report, title="나의 갓생 지수")],position="top")
 pg.run()
-st.title("🌱 갓생 살기 플래너")
