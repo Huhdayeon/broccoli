@@ -60,6 +60,6 @@ def page_report():
 pg = st.navigation([
     st.Page(page_moto, title="오늘의 다짐"),
     st.Page(page_todo, title="오늘의 할 일"),
-    st.Page(page_report, title="나의 갓생 지수")]position="top")
+    st.Page(page_report, title="나의 갓생 지수")],position="top")
 pg.run()
 st.title("🌱 갓생 살기 플래너")
