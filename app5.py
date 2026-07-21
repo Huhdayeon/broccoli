@@ -2,6 +2,7 @@ import streamlit as st
 
 from openai import OpenAI
 ai_client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
+
 if 'todo_list' not in st.session_state:
     st.session_state.todo_list = []
 if 'user_motto' not in st.session_state:
@@ -70,16 +71,12 @@ def page_report():
         progress = (count / total) * 100
         st.metric("오늘의 달성률", f"{progress:.1f}%")
         st.progress(progress / 100)
+    if progress == 100:
+            st.balloons()
+            st.success("모든 목표를 달성하셨습니다! 🏆")
     if st.button("기록 전체 초기화"):
         st.session_state.todo_list = []
         st.rerun()
-
-pg = st.navigation([
-    st.Page(page_motto, title="오늘의 다짐"),
-    st.Page(page_todo, title="오늘의 할 일"),
-    st.Page(page_report, title="나의 갓생 지수"),
-    st.Page(page_ai_coach, title="AI 코치와 대화하기")],position="top")
-pg.run()
 
 def page_ai_coach():
     st.header("AI 코치와 대화하기")
@@ -91,10 +88,27 @@ def page_ai_coach():
         if message["role"] != "system":
             with st.chat_message(message["role"]):
                 st.markdown(message["content"])
-    prompt = st.text_input("질문을 입력하세요.")
-    if st.button("보내기"):
-        response = ai_client.responses.create(
-            model="gpt-5.4-mini",
-            input=prompt
-        )
-        st.write(response.output_text)
+
+question = st.chat_input("질문을 입력하세요")
+    if question:
+        st.session_state.messages.append({"role": "user", "content": question})
+        with st.chat_message("user"):
+            st.markdown(question)
+        with st.chat_message("assistant"):
+            status_context = f"현재 나의 할 일과 달성 여부: {st.session_state.todo_list}"
+            prompt = st.session_state.messages + [{"role": "system", "content": status_context}]
+            with st.spinner("AI 코치가 생각 중...🤔"):
+                response = ai_client.chat.completions.create(
+                    model="gpt-5.4-mini",
+                    messages=prompt)
+                ai_response = response.choices[0].message.content
+                st.markdown(ai_response)
+        st.session_state.messages.append({"role": "assistant", "content": ai_response})
+
+pg = st.navigation([
+    st.Page(page_motto, title="오늘의 다짐"),
+    st.Page(page_todo, title="오늘의 할 일"),
+    st.Page(page_report, title="나의 갓생 지수"),
+    st.Page(page_ai_coach, title="AI 코치와 대화하기")],position="top")
+
+pg.run()
