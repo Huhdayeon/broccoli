@@ -59,3 +59,9 @@ def page_report():
     if st.button("기록 전체 초기화"):
         st.session_state.todo_list = []
         st.rerun()
+
+pg = st.navigation([
+    st.page(page_moto, title="오늘의 다짐"),
+    st.page(page_todo, title="오늘의 할 일"),
+    st.page(page_report, title="나의 갓생 지수")])
+pg.run()
