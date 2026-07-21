@@ -4,6 +4,9 @@ if 'todo_list' not in st.session_state:
     st.session_state.todo_list = []
 if 'user_motto' not in st.session_state:
     st.session_state.user_motto = "오늘도 화이팅!"
+if 'motto_updated' not in st.session_state:
+    st.session_state.motto_updated = False
+
 
 def add_todo():
     task = st.session_state.todo_input
@@ -16,7 +19,7 @@ def add_todo():
 def edit_motto():
     motto = st.text_input("나의 한 줄 좌우명을 적어주세요.")
     if st.button("다짐 저장"):
-        st.session_state.user_moto = motto
+        st.session_state.user_motto = motto
         st.session_state.motto_updated = True
         st.rerun()
         
