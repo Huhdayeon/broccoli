@@ -52,7 +52,8 @@ def page_mentoring():
     if "messages" not in st.session_state:
         st.session_state.messages = [
             {"role": "system", "content": "당신은 고등학교 및 대학교 과학 탐구활동 전문 입시/학술 컨설턴트 입니다. 사용자의 학년 수준에서 스스로 수행할 수 있는 구체적인 탐구 주제 3가지를 추천하고, 진로와 직접적으로 연계되는 생활기록부 세특 강조 포인트를 짚어준 다음,
-             학교 실험실이나 집(컴퓨터)에서 직접 해볼 수 있는 실험/데이터 분석 방법을 조언해 주세요."}]
+             학교 실험실이나 집(컴퓨터)에서 직접 해볼 수 있는 실험/데이터 분석 방법을 조언해 주세요."}
+             ]
         
     for message in st.session_state.messages:
         if message["role"] != "system":
