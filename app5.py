@@ -19,7 +19,6 @@ def page_moto():
     if st.button("다짐 저장"):
         st.session_state.user_motto = motto
         st.success("좌우명이 등록되었습니다!")
-    st.markdown("---")
 
 def page_todo():
     st.header("✅ 2. 오늘의 할 일")
@@ -29,7 +28,6 @@ def page_todo():
     if new_todo == "":
         st.warning("할 일을 입력하고 버튼을 눌러주세요!")
 
-    st.markdown("---")
 for i in range(len(st.session_state.todo_list)):
     col_task, col_btn, col_status = st.columns([4, 1, 1])
     with col_task:
