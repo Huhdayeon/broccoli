@@ -38,7 +38,7 @@ def page_research():
       st.session_state.messages.append({"role": "assistant", "content": ai_response})
 
 def page_mentoring():
-  st.title("나이&진로 맞춤형 탐구 설계 조언"
+  st.title("나이&진로 맞춤형 탐구 설계 조언")
   st.info("사이드바에 입력하신 프로필을 바탕으로, 학년 수준에 맞는 탐구 로드맵을 제공합니다.")
   st.markdown("---")
   with st.container(border=True):
