@@ -12,7 +12,7 @@ with st.sidebar:
 
 def page_research():
   st.title("최신 연구&학술 동향")
-  st.info("선택하신 분야를바탕으로 최신트렌드와 논문 이슈를 탐색합니다.")
+  st.info("선택하신 분야를 바탕으로 최신트렌드와 논문 이슈를 탐색합니다.")
   st.markdown("---")
   if "messages" not in st.session_state:
         st.session_state.messages = [
