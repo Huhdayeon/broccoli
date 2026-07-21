@@ -109,5 +109,4 @@ pg = st.navigation([
     st.Page(page_todo, title="오늘의 할 일"),
     st.Page(page_report, title="나의 갓생 지수"),
     st.Page(page_ai_coach, title="AI 코치와 대화하기")],position="top")
-
 pg.run()
