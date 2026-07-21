@@ -29,7 +29,7 @@ def page_todo():
     if new_todo == "":
         st.warning("할 일을 입력하고 버튼을 눌러주세요!")
 
-st.markdown("---")
+    st.markdown("---")
 for i in range(len(st.session_state.todo_list)):
     col_task, col_btn, col_status = st.columns([4, 1, 1])
     with col_task:
